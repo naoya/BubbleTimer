@@ -1,0 +1,3 @@
+[submodule "vendor/teacup"]
+	path = vendor/teacup
+	url = https://github.com/rubymotion/teacup

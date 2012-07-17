@@ -1,20 +1,37 @@
+Teacup::Stylesheet.new(:timer_view) do
+  style :root,
+    landscape: false
+
+  style :state,
+    left: 20,
+    top: 200,
+    width: 280,
+    height: 40,
+    text: 'Tap to Start',
+    textAlignment: UITextAlignmentCenter,
+    textColor: 'white'.to_color,
+    backgroundColor: UIColor.clearColor,
+    font: UIFont.systemFontOfSize(30)
+
+  style :button,
+    left: 20,
+    top: 260,
+    width: 280,
+    height: 40
+end
+
 class TimerController < UIViewController
-  def viewDidLoad
-    margin = 20
+  stylesheet :timer_view
 
-    @state = UILabel.new
-    @state.font = UIFont.systemFontOfSize(30)
-    @state.text = 'Tap to start'
-    @state.textAlignment = UITextAlignmentCenter
-    @state.textColor = UIColor.whiteColor
-    @state.backgroundColor = UIColor.clearColor
-    @state.frame = [[margin, 200], [view.frame.size.width - margin * 2, 40]]
-    view.addSubview(@state)
-
-    @button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
+  layout :root do
+    @state = subview(UILabel, :state)
+    @button = subview(UIButton.buttonWithType(UIButtonTypeRoundedRect), :button)
     @button.setTitle('Start', forState:UIControlStateNormal)
     @button.setTitle('Stop', forState:UIControlStateSelected)
-    @button.frame = [[margin, 260], [view.frame.size.width - margin * 2, 40]]
+  end
+
+  def viewDidLoad
+    super
 
     @button.when(UIControlEventTouchUpInside) do
       if @timer
